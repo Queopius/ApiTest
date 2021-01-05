@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::needsRehash($password) ? \Hash::make($password) : $password;
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class)->withDefault();
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class)->withDefault();
+    }
 }
