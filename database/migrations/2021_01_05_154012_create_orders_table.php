@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
 
             $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('order_state_lang_id')->nullable()->constrained();
 
             $table->decimal('grand_total', 20, 6);
 

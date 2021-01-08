@@ -16,7 +16,7 @@ class CreateOrderStateLangsTable extends Migration
         Schema::create('order_state_langs', function (Blueprint $table) {
             $table->id();
 
-           $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
+            $table->string('name');
 
             $table->timestamps();
         });

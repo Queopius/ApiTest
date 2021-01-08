@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
         AddressTableSeeder::class,
         UsersTableSeeder::class,
         ProductsTableSeeder::class,
+        OrderStateLangTableSeeder::class,
         OrdersTableSeeder::class,
         OrderDetailsTableSeeder::class,
     ];
@@ -20,11 +21,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->truncateTables([
+        $this->truncateTables([
             'country_langs',
             'addresses',
-            'order_state_langs',
             'users',
+            'order_state_langs',
             'products',
             'orders',
             'order_details',

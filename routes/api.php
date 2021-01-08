@@ -14,15 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group([
-    'namespace' => 'Api/v1',
-    'middleware' => 'auth:api'
+    'namespace' => 'Api',
     ], function () {
-        Route::post('order_one', 'OrderController@postOrderOne');
-        Route::post('order_two', 'OrderController@postOrderTwo');
-        Route::post('order_tree', 'OrderController@postOrderTree');
+        Route::get('orders', 'OrderController@postOrder')->name('orders');
+        Route::post('order-two', 'OrderController@postOrderTwo')->name('order-one');
+        Route::post('order-tree', 'OrderController@postOrderTree')->name('order-tree');
 });
