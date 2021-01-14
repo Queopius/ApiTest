@@ -20,7 +20,11 @@ class OrderController extends Controller
     public function getOrders(Request $request)
     {
         $filter = $request->search;
-        $orders = Order::identify( $filter )->get();
+        $orders = Order::with([
+                    'status', 'client', 'client.country', 'client.address', 'products'
+                ])
+                ->identify( $filter )
+                ->get();
 
         return OrderResource::collection($orders);
     }
