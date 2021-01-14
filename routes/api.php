@@ -19,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group([
+    'prefix' => 'v1',
     'namespace' => 'Api',
     ], function () {
-        Route::get('orders', 'OrderController@postOrder')->name('orders');
-        Route::post('order-two', 'OrderController@postOrderTwo')->name('order-one');
-        Route::post('order-tree', 'OrderController@postOrderTree')->name('order-tree');
+        /**
+         * Route Api Orders
+         */
+        Route::get('/orders', 'v1\OrderController@getOrders');
+        Route::get('/orders-api', 'v1\OrderController@getApi');
+        Route::get('order_states', 'v1\OrderController@getStatus');
 });

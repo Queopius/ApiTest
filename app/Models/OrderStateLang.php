@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderStateLang extends Model
 {
     protected $table = 'order_state_langs';
-    protected $guarded = [];
-    protected $visible = ['id', 'name'];
+    protected $fillable = ['name'];
 
     public function orders()
     {

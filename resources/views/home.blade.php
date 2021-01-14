@@ -24,6 +24,6 @@
 
 @push('scripts')
 
-    <script src="{{ asset('js/order/order.js') }}"></script>
+    {{-- <script src="{{ asset('js/order/order.js') }}"></script> --}}
 
 @endpush

@@ -47,5 +47,9 @@ class OrderStateLangTableSeeder extends Seeder
         OrderStateLang::create([
             'name' => 'refunded'
         ]);
+
+        OrderStateLang::create([
+            'name' => 'waitingForPayment'
+        ]);
 	}
 }

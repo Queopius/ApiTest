@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CountryLang extends Model
 {
     protected $table = 'country_langs';
-    protected $guarded = [];
-    protected $visible = ['name'];
+    protected $fillable = ['name', 'code'];
 
     public function users()
     {

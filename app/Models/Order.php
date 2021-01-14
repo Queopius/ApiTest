@@ -2,19 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\OrderDetail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     protected $table = 'orders';
-    protected $guarded = [];
-    protected $visible = ['id', 'client', 'status', 'orderDetails', 'created_at'];
-
-    public static function listOrder()
-    {
-        return Order::with(['client.country', 'client.address', 'status', 'orderDetails.product']);
-    }
+    protected $fillable = [
+        'total', 'order_state_lang_id', 'user_id', 'identify', 'payment_method', 'notes'
+    ];
 
     public function client()
     {
@@ -26,30 +22,41 @@ class Order extends Model
         return $this->belongsTo(OrderStateLang::class, 'order_state_lang_id');
     }
 
-    public function orderDetails()
+    public function products()
     {
-        return $this->hasMany(OrderDetail::class, 'id_order');
+        return $this->belongsToMany(Product::class, 'order_details');
     }
 
-    public function scopeFilterItemsOrder($query, $filter)
+    public function scopeIdentify($query, $filter)
     {
         if( !empty( $filter) ) {
-            $query->where('id', 'LIKE', '%'.$filter.'%')
-                ->orWhereHas('address', function ($query) use ($filter) {
-                        $query->where('post_code', 'LIKE', '%'.$filter.'%');
-                    })
-                ->orWhereHas('status', function ($query) use ($filter) {
-                        $query->where('name', 'LIKE', '%'.$filter.'%');
-                    })
-                ->orWhereHas('client', function ($query) use ($filter) {
-                        $query->where('name', 'LIKE', '%'.$filter.'%');
-                    })
-                ->orWhereHas('orderDetails.product', function ($query) use ($filter) {
-                        $query->where('name', 'LIKE', '%'.$filter.'%');
-                    })
-                ->orWhereHas('client.country', function ($query) use ($filter) {
+            $query->where('identify', 'LIKE', '%'.$filter.'%');
+        }
+    }
+
+    public function scopePostCode($query, $filter)
+    {
+        if( !empty( $filter) ) {
+            $query->where('post_code', 'LIKE', '%'.$filter.'%');
+        }
+    }
+
+    public function scopeFrom($query, $date)
+    {
+        if ($date) {
+            $date = Carbon::createFromFormat('d/m/Y', $date);
+
+            $query->whereDate('created_at', '>=', $date);
+        }
+    }
+
+    public function scopeStatus($query, $filter)
+    {
+        if( !empty( $filter) ) {
+            $query->whereHas('status', function ($query) use ($filter) {
                         $query->where('name', 'LIKE', '%'.$filter.'%');
                     });
         }
     }
+
 }

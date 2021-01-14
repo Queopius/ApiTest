@@ -16,12 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('order_state_lang_id')->nullable()->constrained();
 
-            $table->decimal('grand_total', 20, 6);
+            $table->decimal('total', 20, 6);
 
-            $table->string('order_number')->unique();
+            $table->integer('user_id')->nullable();
+            $table->string('identify')->unique();
             $table->string('payment_method')->nullable();
             $table->text('notes')->nullable();
 

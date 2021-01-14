@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     protected $table = 'order_details';
-    protected $guarded = [];
-    protected $visible = ['id_order', 'product'];
+    protected $fillable = [
+        'id_order', 'order_id', 'product_id', 'qty', 'price', 'notes'
+    ];
 
     public function order()
     {
